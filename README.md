@@ -18,3 +18,6 @@
     
     // 源文件路径
     NSString *sourcePath = @"/Users/winter/Desktop/OneKeyChangeXIBColor/testXIB";
+
+    [self findXibOrStoryboardFile:sourcePath];
+    [self modifyColorModel:objColorModel];
