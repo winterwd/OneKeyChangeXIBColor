@@ -1,6 +1,6 @@
 #OneKeyChangeXIBColor
 
-设置一下属性即可完成 一键修改
+设置以下属性即可完成 一键修改
 
     // ff6000 替换
 //    UIColor *color = [UIColor colorWithRed:0.4078 green:0.7216 blue:0.0627 alpha:1.0];
