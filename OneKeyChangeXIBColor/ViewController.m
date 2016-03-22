@@ -13,6 +13,7 @@
 @property (weak) IBOutlet NSTextField *modifySuccess;
 @property (weak) IBOutlet NSTextField *modifyFailed;
 
+@property (weak) IBOutlet NSProgressIndicator *indicator;
 
 @property (nonatomic, strong) NSMutableArray *xibFilePaths;
 @property (nonatomic, strong) NSMutableArray *storyboardFilePaths;
@@ -31,6 +32,7 @@
     self.xibFilePaths = [NSMutableArray array];
     self.storyboardFilePaths = [NSMutableArray array];
     
+    [self.indicator startAnimation:nil];
     
     // ff6000 替换
     //    UIColor *color = [UIColor colorWithRed:0.4078 green:0.7216 blue:0.0627 alpha:1.0];
@@ -52,7 +54,7 @@
 //    objColorModel.green = @"0.7216";
 //    objColorModel.blue = @"0.0627";
     
-    // 源文件路径绝对
+    // 工程总目录 源文件路径绝对
     NSString *sourcePath = @"/Users/winter/Desktop/OneKeyChangeXIBColor/testXIB";
     ;
     [self findXibOrStoryboardFile:sourcePath];
@@ -86,6 +88,8 @@
     BOOL xibResult = [self modifyColorModel:objColorModel filePaths:self.xibFilePaths];
     BOOL storyboardResult =[self modifyColorModel:objColorModel filePaths:self.storyboardFilePaths];
 
+    [self.indicator stopAnimation:nil];
+    self.indicator.hidden = YES;
     if (xibResult && storyboardResult) {
         self.modifySuccess.hidden = NO;
         self.modifyFailed.hidden = YES;

@@ -697,15 +697,25 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="SnE-R6-ab7">
+                                <rect key="frame" x="224" y="119" width="32" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="32" id="PM6-jN-qZQ"/>
+                                    <constraint firstAttribute="height" constant="32" id="QWq-cO-7Wz"/>
+                                </constraints>
+                            </progressIndicator>
                         </subviews>
                         <constraints>
                             <constraint firstItem="b2g-pe-hpl" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="9Ef-ai-ceX"/>
                             <constraint firstItem="n0p-DT-JEz" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="PVf-lt-Wgw"/>
                             <constraint firstItem="n0p-DT-JEz" firstAttribute="centerY" secondItem="m2S-Jp-Qdl" secondAttribute="centerY" id="fvs-Bb-hdk"/>
                             <constraint firstItem="b2g-pe-hpl" firstAttribute="centerY" secondItem="m2S-Jp-Qdl" secondAttribute="centerY" id="lxd-Ft-aEV"/>
+                            <constraint firstItem="SnE-R6-ab7" firstAttribute="centerY" secondItem="m2S-Jp-Qdl" secondAttribute="centerY" id="qvp-P6-7RS"/>
+                            <constraint firstItem="SnE-R6-ab7" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="ree-lw-r1Y"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="indicator" destination="SnE-R6-ab7" id="ScM-1U-2c9"/>
                         <outlet property="modifyFailed" destination="n0p-DT-JEz" id="FO3-V9-Vng"/>
                         <outlet property="modifySuccess" destination="b2g-pe-hpl" id="Z9w-6V-Pqx"/>
                     </connections>
