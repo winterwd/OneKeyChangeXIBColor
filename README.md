@@ -16,8 +16,8 @@
     objColorModel.green = @"0.4275";
     objColorModel.blue = @"0.1216";
     
-    // 工程总目录 源文件路径
-    NSString *sourcePath = @"/Users/winter/Desktop/OneKeyChangeXIBColor/testXIB";
+    // 源文件路径（这里路径直接将你的工程目录拖进来）
+    NSString *sourcePath = @"/Users/winter/Desktop/OneKeyChangeXIBColor/test";
 
     [self findXibOrStoryboardFile:sourcePath];
     [self modifyColorModel:objColorModel];
