@@ -10,7 +10,6 @@
 		C839A7651C9FD9EC00B6B7F3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C839A7641C9FD9EC00B6B7F3 /* AppDelegate.m */; };
 		C839A7681C9FD9EC00B6B7F3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C839A7671C9FD9EC00B6B7F3 /* main.m */; };
 		C839A76B1C9FD9EC00B6B7F3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C839A76A1C9FD9EC00B6B7F3 /* ViewController.m */; };
-		C839A76D1C9FD9EC00B6B7F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C839A76C1C9FD9EC00B6B7F3 /* Assets.xcassets */; };
 		C839A7701C9FD9EC00B6B7F3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C839A76E1C9FD9EC00B6B7F3 /* Main.storyboard */; };
 		C839A7781C9FDA1500B6B7F3 /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C839A7771C9FDA1500B6B7F3 /* libxml2.2.tbd */; };
 		C839A78B1C9FDC5800B6B7F3 /* WDColorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C839A7891C9FDC5800B6B7F3 /* WDColorModel.m */; };
@@ -23,7 +22,6 @@
 		C839A7671C9FD9EC00B6B7F3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C839A7691C9FD9EC00B6B7F3 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		C839A76A1C9FD9EC00B6B7F3 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		C839A76C1C9FD9EC00B6B7F3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C839A76F1C9FD9EC00B6B7F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C839A7711C9FD9EC00B6B7F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C839A7771C9FDA1500B6B7F3 /* libxml2.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.2.tbd; path = usr/lib/libxml2.2.tbd; sourceTree = SDKROOT; };
@@ -77,7 +75,6 @@
 			isa = PBXGroup;
 			children = (
 				C839A7771C9FDA1500B6B7F3 /* libxml2.2.tbd */,
-				C839A76C1C9FD9EC00B6B7F3 /* Assets.xcassets */,
 				C839A76E1C9FD9EC00B6B7F3 /* Main.storyboard */,
 				C839A7711C9FD9EC00B6B7F3 /* Info.plist */,
 				C839A7671C9FD9EC00B6B7F3 /* main.m */,
@@ -142,7 +139,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C839A76D1C9FD9EC00B6B7F3 /* Assets.xcassets in Resources */,
 				C839A7701C9FD9EC00B6B7F3 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -297,6 +293,7 @@
 				C839A7761C9FD9EC00B6B7F3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

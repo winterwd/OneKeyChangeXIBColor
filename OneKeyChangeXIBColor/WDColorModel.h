@@ -8,7 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
+@interface ColorValue : NSObject
+@property (nonatomic, assign) CGFloat red;
+@property (nonatomic, assign) CGFloat green;
+@property (nonatomic, assign) CGFloat blue;
+
+@property (nonatomic, copy) NSString *redString;
+@property (nonatomic, copy) NSString *greenString;
+@property (nonatomic, copy) NSString *blueString;
+@end
+
 @interface WDColorModel : NSObject
+
+@property (nonatomic, strong) ColorValue *color;
 
 @property (nonatomic, copy) NSString *red;
 @property (nonatomic, copy) NSString *green;

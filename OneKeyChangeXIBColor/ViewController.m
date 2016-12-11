@@ -9,14 +9,20 @@
 #import "ViewController.h"
 #import "WDColorModel.h"
 
-@interface ViewController ()
+@interface ViewController ()<NSTextDelegate,NSPathControlDelegate>
 @property (weak) IBOutlet NSTextField *modifySuccess;
 @property (weak) IBOutlet NSTextField *modifyFailed;
+@property (weak) IBOutlet NSTextField *sourcePathTextField;
 
 @property (weak) IBOutlet NSProgressIndicator *indicator;
+@property (weak) IBOutlet NSView *indicatorView;
 
 @property (nonatomic, strong) NSMutableArray *xibFilePaths;
 @property (nonatomic, strong) NSMutableArray *storyboardFilePaths;
+
+@property (nonatomic, strong) ColorValue *beforeColor;
+@property (nonatomic, strong) ColorValue *afterColor;
+@property (nonatomic, copy) NSString *filePath;
 
 /** 替换的 */
 @property (nonatomic, strong) WDColorModel *targetColorModel;
@@ -32,31 +38,104 @@
     self.xibFilePaths = [NSMutableArray array];
     self.storyboardFilePaths = [NSMutableArray array];
     
+    self.beforeColor = [[ColorValue alloc] init];
+    self.beforeColor = [[ColorValue alloc] init];
+}
+
+#pragma mark - delegate
+
+- (void)controlTextDidChange:(NSNotification *)notification
+{
+    NSTextField *sender = notification.object;
+    NSTextView *textView = notification.userInfo[@"NSFieldEditor"];
+    NSString *string = textView.string;
+    
+    switch (sender.tag) {
+        case 100:
+            self.beforeColor.red = [string floatValue];
+            break;
+        case 101:
+            self.beforeColor.green = [string floatValue];
+            break;
+        case 102:
+            self.beforeColor.blue = [string floatValue];
+            break;
+        case 103:
+            self.afterColor.red = [string floatValue];
+            break;
+        case 104:
+            self.afterColor.green = [string floatValue];
+            break;
+        case 105:
+            self.afterColor.blue = [string floatValue];
+            break;
+        case 0:
+            // filepath
+            self.filePath = string;
+            break;
+    }
+}
+
+#pragma mark - action
+
+- (IBAction)choseFilePath:(NSButton *)sender
+{
+    NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+    [openPanel setCanChooseFiles:YES];
+    [openPanel setCanChooseDirectories:YES];
+    
+    NSWindow *window = [[NSApplication sharedApplication] keyWindow];
+    [openPanel beginSheetModalForWindow:window completionHandler:^(NSModalResponse returnCode) {
+        if (returnCode == 1) {
+            NSURL *fileUrl = [[openPanel URLs] objectAtIndex:0];
+            NSString *filePath = [[fileUrl.absoluteString componentsSeparatedByString:@"file://"] lastObject];
+            NSLog(@"fileContext = %@",filePath);
+            self.sourcePathTextField.stringValue = filePath;
+            self.filePath = filePath;
+        }
+    }];
+}
+
+- (IBAction)startChage:(NSButton *)sender
+{
+    if (self.filePath.length > 0) {
+        [self startAnimation];
+        
+        [self startChangeXibColorWith:self.beforeColor after:self.afterColor sourcePath:self.filePath];
+    }
+    else {
+        
+    }
+}
+
+- (void)startAnimation
+{
+    self.indicatorView.hidden = NO;
     [self.indicator startAnimation:nil];
-    
-    // ff6000 替换
-    //    UIColor *color = [UIColor colorWithRed:0.4078 green:0.7216 blue:0.0627 alpha:1.0];
+}
+
+- (void)stopAnimation
+{
+    [self.indicator stopAnimation:nil];
+    self.indicatorView.hidden = YES;
+}
+
+#pragma mark - changeColor
+/**
+ 开始执行 修改 xib或stroyboard 控件的颜色
+
+ @param beforColor 修改前的颜色值
+ @param afterColor 修改后的颜色值
+ @param sourcePath 所需要修改的文件路径
+ */
+- (void)startChangeXibColorWith:(ColorValue *)beforColor after:(ColorValue *)afterColor sourcePath:(NSString *)sourcePath
+{
     self.targetColorModel = [[WDColorModel alloc] init];
-    self.targetColorModel.red = @"0.4078" ;
-    self.targetColorModel.green = @"0.7216";
-    self.targetColorModel.blue = @"0.0627";
-//    self.targetColorModel.red = @"0.9294" ;
-//    self.targetColorModel.green = @"0.4275";
-//    self.targetColorModel.blue = @"0.1216";
-    
-    // ed6d1f 需要被替换的
-//  UIColor *color = [UIColor colorWithRed:0.9294 green:0.4275 blue:0.1216 alpha:1.0];
+    self.targetColorModel.color = beforColor;
+
     WDColorModel *objColorModel = [[WDColorModel alloc] init];
-    objColorModel.red = @"0.9294";
-    objColorModel.green = @"0.4275";
-    objColorModel.blue = @"0.1216";
-//    objColorModel.red = @"0.4078";
-//    objColorModel.green = @"0.7216";
-//    objColorModel.blue = @"0.0627";
-    
-    // 工程总目录 源文件路径绝对
-    NSString *sourcePath = @"/Users/winter/Desktop/OneKeyChangeXIBColor/testXIB";
-    ;
+    objColorModel.color = afterColor;
+
     [self findXibOrStoryboardFile:sourcePath];
     [self modifyColorModel:objColorModel];
 }
@@ -81,15 +160,13 @@
     }
 }
 
-
 // 开始修改颜色 objColorModel : 需要被替换的
 - (void)modifyColorModel:(WDColorModel *)objColorModel
 {
     BOOL xibResult = [self modifyColorModel:objColorModel filePaths:self.xibFilePaths];
     BOOL storyboardResult =[self modifyColorModel:objColorModel filePaths:self.storyboardFilePaths];
 
-    [self.indicator stopAnimation:nil];
-    self.indicator.hidden = YES;
+    [self stopAnimation];
     if (xibResult && storyboardResult) {
         self.modifySuccess.hidden = NO;
         self.modifyFailed.hidden = YES;

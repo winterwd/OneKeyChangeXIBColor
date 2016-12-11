@@ -36,6 +36,15 @@
     return model;
 }
 
+- (void)setColor:(ColorValue *)color
+{
+    _color = color;
+    
+    self.red = color.redString;
+    self.green = color.greenString;
+    self.blue = color.blueString;
+}
+
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"key:%@\nred:%@\ngreen:%@\nblue:%@",self.key,self.red,self.green,self.blue];
@@ -50,5 +59,42 @@
         return YES;
     }
     return NO;
+}
+@end
+
+@implementation ColorValue
+//- (instancetype)init
+//{
+//    self = [super init];
+//    if (self) {
+//        self.red = 0;
+//        self.green = 0;
+//        self.blue = 0;
+//    }
+//    return self;
+//}
+
+- (void)setRed:(CGFloat)red
+{
+    _red = red;
+    
+    CGFloat temp = red / 255.0;
+    self.redString = [NSString stringWithFormat:@"%.4f",temp];
+}
+
+- (void)setGreen:(CGFloat)green
+{
+    _green = green;
+    
+    CGFloat temp = green / 255.0;
+    self.greenString = [NSString stringWithFormat:@"%.4f",temp];
+}
+
+- (void)setBlue:(CGFloat)blue
+{
+    _blue = blue;
+    
+    CGFloat temp = blue / 255.0;
+    self.blueString = [NSString stringWithFormat:@"%.4f",temp];
 }
 @end
