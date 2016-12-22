@@ -17,16 +17,16 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QO3-iN-YcG">
                     <rect key="frame" x="157" y="156" width="42" height="21"></rect>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"></autoresizingMask>
-                    <color key="backgroundColor" red="0.7843" green="0.7843" blue="0.7843" alpha="1" colorSpace="custom" customColorSpace="sRGB"></color>
+                    <color key="backgroundColor" red="0.3921" green="0.3921" blue="0.3921" alpha="1" colorSpace="custom" customColorSpace="sRGB"></color>
                     <fontDescription key="fontDescription" type="system" pointSize="17"></fontDescription>
-                    <color key="textColor" red="0.7843" green="0.7843" blue="0.7843" alpha="1" colorSpace="custom" customColorSpace="sRGB"></color>
+                    <color key="textColor" red="0.3921" green="0.3921" blue="0.3921" alpha="1" colorSpace="custom" customColorSpace="sRGB"></color>
                     <nil key="highlightedColor"></nil>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CAp-zQ-oU3">
                     <rect key="frame" x="157" y="204" width="46" height="30"></rect>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"></autoresizingMask>
                     <state key="normal" title="Button">
-                        <color key="titleColor" red="0.7843" green="0.7843" blue="0.7843" alpha="1" colorSpace="custom" customColorSpace="sRGB"></color>
+                        <color key="titleColor" red="0.3921" green="0.3921" blue="0.3921" alpha="1" colorSpace="custom" customColorSpace="sRGB"></color>
                     </state>
                 </button>
             </subviews>

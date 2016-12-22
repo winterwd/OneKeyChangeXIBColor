@@ -155,8 +155,7 @@
     
     CGFloat temp = red / 255.0;
     NSInteger tempValue = temp * 10000;
-    temp = tempValue / 10000.0;
-    self.redString = [NSString stringWithFormat:@"%.4f",temp];
+    self.redString = [NSString stringWithFormat:@"0.%ld",tempValue];;
 }
 
 - (void)setGreen:(CGFloat)green
@@ -165,8 +164,7 @@
     
     CGFloat temp = green / 255.0;
     NSInteger tempValue = temp * 10000;
-    temp = tempValue / 10000.0;
-    self.greenString = [NSString stringWithFormat:@"%.4f",temp];
+    self.greenString = [NSString stringWithFormat:@"0.%ld",tempValue];
 }
 
 - (void)setBlue:(CGFloat)blue
@@ -175,7 +173,6 @@
     
     CGFloat temp = blue / 255.0;
     NSInteger tempValue = temp * 10000;
-    temp = tempValue / 10000.0;
-    self.blueString = [NSString stringWithFormat:@"%.4f",temp];
+    self.blueString = [NSString stringWithFormat:@"0.%ld",tempValue];
 }
 @end

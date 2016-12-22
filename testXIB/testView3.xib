@@ -17,13 +17,13 @@
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qjH-gn-rIv">
                     <rect key="frame" x="141" y="238" width="46" height="30"></rect>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"></autoresizingMask>
-                    <color key="backgroundColor" red="0.7843" green="0.7843" blue="0.7843" alpha="1" colorSpace="custom" customColorSpace="sRGB"></color>
+                    <color key="backgroundColor" red="0.3921" green="0.3921" blue="0.3921" alpha="1" colorSpace="custom" customColorSpace="sRGB"></color>
                     <state key="normal" title="Button"></state>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FKb-zP-HGy">
                     <rect key="frame" x="145" y="350" width="42" height="21"></rect>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"></autoresizingMask>
-                    <color key="backgroundColor" red="0.7843" green="0.7843" blue="0.7843" alpha="1" colorSpace="custom" customColorSpace="sRGB"></color>
+                    <color key="backgroundColor" red="0.3921" green="0.3921" blue="0.3921" alpha="1" colorSpace="custom" customColorSpace="sRGB"></color>
                     <fontDescription key="fontDescription" type="system" pointSize="17"></fontDescription>
                     <nil key="textColor"></nil>
                     <nil key="highlightedColor"></nil>

@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "WDColorModel.h"
 
-@interface ViewController ()<NSTextDelegate,NSPathControlDelegate>
+@interface ViewController ()<NSTextDelegate>
 @property (weak) IBOutlet NSTextField *modifySuccess;
 @property (weak) IBOutlet NSTextField *modifyFailed;
 @property (weak) IBOutlet NSTextField *sourcePathTextField;
@@ -164,7 +164,7 @@
 - (void)modifyColorModel:(WDColorModel *)objColorModel
 {
     BOOL xibResult = [self modifyColorModel:objColorModel filePaths:self.xibFilePaths];
-    BOOL storyboardResult =[self modifyColorModel:objColorModel filePaths:self.storyboardFilePaths];
+    BOOL storyboardResult = [self modifyColorModel:objColorModel filePaths:self.storyboardFilePaths];
 
     [self stopAnimation];
     if (xibResult && storyboardResult) {
@@ -215,10 +215,10 @@
         if ([subElement.name isEqualToString:@"color"]) {
             WDColorModel *obj = [WDColorModel colorModelWithArray:subElement.attributes];
             if ([obj isEqual:self.targetColorModel]) {
-                objColorModel.key = obj.key;
-                objColorModel.alpha = obj.alpha;
-                objColorModel.colorSpace = obj.colorSpace;
-                objColorModel.customColorSpace = obj.customColorSpace;
+//                objColorModel.key = obj.key;
+//                objColorModel.alpha = obj.alpha;
+//                objColorModel.colorSpace = obj.colorSpace;
+//                objColorModel.customColorSpace = obj.customColorSpace;
                 [self updateXMLNodelWithNode:subElement color:objColorModel];
             }
         }
@@ -231,20 +231,8 @@
 {
     NSArray *array = subElement.attributes;
     for (NSXMLNode *node in array) {
-        if ([node.name isEqualToString:@"key"]) {
-            [node setStringValue:obj.key];
-        }
-        else if ([node.name isEqualToString:@"colorSpace"]) {
-            [node setStringValue:obj.colorSpace];
-        }
-        else if ([node.name isEqualToString:@"alpha"]) {
-            [node setStringValue:obj.alpha];
-        }
-        else if ([node.name isEqualToString:@"customColorSpace"]) {
-            // Xcode8 以后
-            [node setStringValue:obj.customColorSpace];
-        }
-        else if ([node.name isEqualToString:@"red"]) {
+        
+        if ([node.name isEqualToString:@"red"]) {
             [node setStringValue:obj.red];
         }
         else if ([node.name isEqualToString:@"green"]) {
@@ -253,6 +241,19 @@
         else if ([node.name isEqualToString:@"blue"]) {
             [node setStringValue:obj.blue];
         }
+//        else if ([node.name isEqualToString:@"key"]) {
+//            [node setStringValue:obj.key];
+//        }
+//        else if ([node.name isEqualToString:@"colorSpace"]) {
+//            [node setStringValue:obj.colorSpace];
+//        }
+//        else if ([node.name isEqualToString:@"alpha"]) {
+//            [node setStringValue:obj.alpha];
+//        }
+//        else if ([node.name isEqualToString:@"customColorSpace"]) {
+//            // Xcode8 以后
+//            [node setStringValue:obj.customColorSpace];
+//        }
     }
 }
 
