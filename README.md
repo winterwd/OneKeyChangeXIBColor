@@ -3,7 +3,7 @@
 
 ***
 
-- ####2016.12.22
+###2016.12.22
 
 
 最近有点闲了，所以就把以前的这个小工具更新一下，这么长时间，还经历过一次Xcode8的更新升级，估计这个小工具是不能用了，打开工程cmd+R了一下，发现还真的不能用了，索性给这个小工具来一次升级。
@@ -113,30 +113,3 @@
 
 具体细节见[代码](https://git.oschina.net/winter7/OneKeyChangeXIBColor.git)
 > end
-
-
-- ####2016.03.21
-
-事情是这样的，今天UI妹子哭着对我说，所有界面的主题色要统一修改（cao，尼玛，上周不是刚改过的吗！吐血了！）
-
-现在iOS开发，我基本界面都是用xib或者storyboard的，所以一般跟主题色有关的控件颜色就直接在上面设置好了，现在妹子说让我换个颜色，这个要死人，听说Android那边可以一键修改啊，为啥我们大iOS就木有这个功能！！！
-
-本着懒人的想法，于是就有了今天的文章！
-
-我要写段代码，让它帮我来修改，这样岂不是更能显得我们搞程序的B格😂
-
-先说下思路吧：其实很简单，首先遍历整个文件夹，找出所有的.xib和.storyboard（注意：这些文件其实都是xml文件），这下好了，找出xml文本中所有color的标签，然后修改属性，生成新的xml,搞定！
-
-设置以下属性即可完成 修改
-```
-// 工程总目录 源文件路径绝对（这里路径直接将你的工程目录拖进来）
-NSString *sourcePath = @"/Users/winter/Desktop/OneKeyChangeXIBColor/test";
-// 工程修改前颜色 RGB
-NSInteger red_pre = 237;
-NSInteger green_pre = 109;
-NSInteger blue_pre = 31;
-// 修改后的颜色 RGB
-NSInteger red_mod = 255;
-NSInteger green_mod = 96;
-NSInteger blue_mod = 0;
-```
