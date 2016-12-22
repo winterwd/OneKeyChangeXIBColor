@@ -22,6 +22,12 @@
 
 @property (nonatomic, strong) ColorValue *color;
 
+// 四位数
+@property (nonatomic, assign) NSInteger redValue;
+@property (nonatomic, assign) NSInteger greenValue;
+@property (nonatomic, assign) NSInteger blueValue;
+
+
 @property (nonatomic, copy) NSString *red;
 @property (nonatomic, copy) NSString *green;
 @property (nonatomic, copy) NSString *blue;

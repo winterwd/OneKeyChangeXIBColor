@@ -241,6 +241,7 @@
             [node setStringValue:obj.alpha];
         }
         else if ([node.name isEqualToString:@"customColorSpace"]) {
+            // Xcode8 以后
             [node setStringValue:obj.customColorSpace];
         }
         else if ([node.name isEqualToString:@"red"]) {

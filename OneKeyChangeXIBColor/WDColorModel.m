@@ -29,16 +29,19 @@
         else if ([node.name isEqualToString:@"red"]) {
             CGFloat temp = [node.stringValue floatValue];
             NSInteger tempValue = temp * 10000;
+            model.redValue = tempValue;
             model.red = [NSString stringWithFormat:@"0.%ld",tempValue];
         }
         else if ([node.name isEqualToString:@"green"]) {
             CGFloat temp = [node.stringValue floatValue];
             NSInteger tempValue = temp * 10000;
+            model.greenValue = tempValue;
             model.green = [NSString stringWithFormat:@"0.%ld",tempValue];
         }
         else if ([node.name isEqualToString:@"blue"]) {
             CGFloat temp = [node.stringValue floatValue];
             NSInteger tempValue = temp * 10000;
+            model.blueValue = tempValue;
             model.blue = [NSString stringWithFormat:@"0.%ld",tempValue];
         }
     }
@@ -50,77 +53,86 @@
     _color = color;
     
     self.red = color.redString;
+    CGFloat temp = [color.redString floatValue];
+    NSInteger tempValue = temp * 10000;
+    self.redValue = tempValue;
+    
     self.green = color.greenString;
+    temp = [color.greenString floatValue];
+    tempValue = temp * 10000;
+    self.greenValue = tempValue;
+    
     self.blue = color.blueString;
+    temp = [color.blueString floatValue];
+    tempValue = temp * 10000;
+    self.blueValue = tempValue;
 }
 
 // 修正-0.0001
-- (NSString *)minusValueStringWith:(NSString *)valueString
+- (NSInteger )minusValueStringWith:(NSString *)valueString
 {
     CGFloat value = [valueString floatValue];
     value -= 0.00009;
     
     NSInteger tempValue = value * 10000;
-    value = tempValue / 10000.0;
-    return [NSString stringWithFormat:@"%.4f",value];
+    return tempValue;
 }
 
 // 修正+0.0001
-- (NSString *)plusValueStringWith:(NSString *)valueString
+- (NSInteger )plusValueStringWith:(NSString *)valueString
 {
     CGFloat value = [valueString floatValue];
     value += 0.00011;
     
     NSInteger tempValue = value * 10000;
-    value = tempValue / 10000.0;
-    return [NSString stringWithFormat:@"%.4f",value];
+    return tempValue;
 }
 
 - (BOOL)isEqual:(WDColorModel *)object
 {
     // 修正-0.0001
-    NSString *objMinusRedValue = [self minusValueStringWith:object.red];
-    NSString *objMinusBlueValue = [self minusValueStringWith:object.blue];
-    NSString *objMinusGreenValue = [self minusValueStringWith:object.green];
+    NSInteger objMinusRedValue = [self minusValueStringWith:object.red];
+    NSInteger objMinusBlueValue = [self minusValueStringWith:object.blue];
+    NSInteger objMinusGreenValue = [self minusValueStringWith:object.green];
     
     // 修正+0.0001
-    NSString *objPlusRedValue = [self plusValueStringWith:object.red];
-    NSString *objPlusBlueValue = [self plusValueStringWith:object.blue];
-    NSString *objPlusGreenValue = [self plusValueStringWith:object.green];
+    NSInteger objPlusRedValue = [self plusValueStringWith:object.red];
+    NSInteger objPlusBlueValue = [self plusValueStringWith:object.blue];
+    NSInteger objPlusGreenValue = [self plusValueStringWith:object.green];
     
     BOOL redEqual = NO;
     BOOL blueEqual = NO;
     BOOL greenEqual = NO;
     
-    if ([self.red isEqualToString:object.red]) {
+    if (self.redValue == object.redValue) {
         redEqual = YES;
     }
-    else if ([self.red isEqualToString:objMinusRedValue]) {
+    else if (self.redValue == objMinusRedValue) {
         redEqual = YES;
     }
-    else if ([self.red isEqualToString:objPlusRedValue]) {
+    else if (self.redValue == objPlusRedValue) {
         redEqual = YES;
     }
     
     // blue
-    if ([self.blue isEqualToString:object.blue]) {
+    if (self.blueValue == object.blueValue) {
         blueEqual = YES;
     }
-    else if ([self.blue isEqualToString:objMinusBlueValue]) {
+    else if (self.blueValue == objMinusBlueValue) {
         blueEqual = YES;
     }
-    else if ([self.blue isEqualToString:objPlusBlueValue]) {
+    else if (self.blueValue == objPlusBlueValue) {
         blueEqual = YES;
     }
     
     // green
-    if ([self.green isEqualToString:object.green]) {
+    if (self.greenValue == object.blueValue) {
         greenEqual = YES;
     }
-    else if ([self.green isEqualToString:objMinusGreenValue]) {
+    else if (self.greenValue == objMinusGreenValue) {
         greenEqual = YES;
     }
-    else if ([self.green isEqualToString:objPlusGreenValue]) {
+    else if (self.greenValue == objPlusGreenValue) {
         greenEqual = YES;
     }
 

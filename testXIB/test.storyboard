@@ -19,7 +19,7 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"></rect>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"></autoresizingMask>
-                        <color key="backgroundColor" red="0.4901" green="0.0039" blue="0.7843" alpha="1" colorSpace="custom" customColorSpace="sRGB"></color>
+                        <color key="backgroundColor" red="0.7843" green="0.7843" blue="0.7843" alpha="1" colorSpace="custom" customColorSpace="sRGB"></color>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"></placeholder>
