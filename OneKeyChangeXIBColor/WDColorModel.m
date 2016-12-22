@@ -23,23 +23,23 @@
         else if ([node.name isEqualToString:@"alpha"]) {
             model.alpha = node.stringValue;
         }
+        else if ([node.name isEqualToString:@"customColorSpace"]) {
+            model.customColorSpace = node.stringValue;
+        }
         else if ([node.name isEqualToString:@"red"]) {
             CGFloat temp = [node.stringValue floatValue];
             NSInteger tempValue = temp * 10000;
-            temp = tempValue / 10000.0;
-            model.red = [NSString stringWithFormat:@"%.4f",temp];
+            model.red = [NSString stringWithFormat:@"0.%ld",tempValue];
         }
         else if ([node.name isEqualToString:@"green"]) {
             CGFloat temp = [node.stringValue floatValue];
             NSInteger tempValue = temp * 10000;
-            temp = tempValue / 10000.0;
-            model.green = [NSString stringWithFormat:@"%.4f",temp];
+            model.green = [NSString stringWithFormat:@"0.%ld",tempValue];
         }
         else if ([node.name isEqualToString:@"blue"]) {
             CGFloat temp = [node.stringValue floatValue];
             NSInteger tempValue = temp * 10000;
-            temp = tempValue / 10000.0;
-            model.blue = [NSString stringWithFormat:@"%.4f",temp];
+            model.blue = [NSString stringWithFormat:@"0.%ld",tempValue];
         }
     }
     return model;
@@ -129,7 +129,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"key:%@\nred:%@\ngreen:%@\nblue:%@",self.key,self.red,self.green,self.blue];
+    return [NSString stringWithFormat:@"key:%@\n red:%@\n green:%@\n blue:%@ alpha:%@\n colorSpace:%@\n customColorSpace:%@\n",self.key, self.red, self.green, self.blue, self.alpha, self.colorSpace, self.customColorSpace];
 }
 
 @end

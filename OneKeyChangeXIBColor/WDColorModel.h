@@ -29,6 +29,7 @@
 @property (nonatomic, copy) NSString *key;
 @property (nonatomic, copy) NSString *alpha;
 @property (nonatomic, copy) NSString *colorSpace;
+@property (nonatomic, copy) NSString *customColorSpace;
 
 + (WDColorModel *)colorModelWithArray:(NSArray<NSXMLNode *> *)array;
 

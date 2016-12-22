@@ -217,7 +217,11 @@
         if ([subElement.name isEqualToString:@"color"]) {
             WDColorModel *obj = [WDColorModel colorModelWithArray:subElement.attributes];
             if ([obj isEqual:self.targetColorModel]) {
-                objNode = [self creatXMLNodel:obj];
+                objColorModel.key = obj.key;
+                objColorModel.alpha = obj.alpha;
+                objColorModel.colorSpace = obj.colorSpace;
+                objColorModel.customColorSpace = obj.customColorSpace;
+                objNode = [self creatXMLNodel:objColorModel];
             }
         }
         if (objNode) {
@@ -233,11 +237,16 @@
 {
     NSXMLElement *subNode = [NSXMLElement elementWithName:@"color"];
     [subNode addAttribute:[NSXMLNode attributeWithName:@"key" stringValue:obj.key]];
-    [subNode addAttribute:[NSXMLNode attributeWithName:@"red" stringValue:self.targetColorModel.red]];
-    [subNode addAttribute:[NSXMLNode attributeWithName:@"green" stringValue:self.targetColorModel.green]];
-    [subNode addAttribute:[NSXMLNode attributeWithName:@"blue" stringValue:self.targetColorModel.blue]];
+    [subNode addAttribute:[NSXMLNode attributeWithName:@"red" stringValue:obj.red]];
+    [subNode addAttribute:[NSXMLNode attributeWithName:@"green" stringValue:obj.green]];
+    [subNode addAttribute:[NSXMLNode attributeWithName:@"blue" stringValue:obj.blue]];
     [subNode addAttribute:[NSXMLNode attributeWithName:@"alpha" stringValue:obj.alpha]];
     [subNode addAttribute:[NSXMLNode attributeWithName:@"colorSpace" stringValue:obj.colorSpace]];
+    
+    if (obj.customColorSpace.length > 0) {
+        // Xcode8 以后
+        [subNode addAttribute:[NSXMLNode attributeWithName:@"customColorSpace" stringValue:obj.customColorSpace]];
+    }
     return subNode;
 }
 
