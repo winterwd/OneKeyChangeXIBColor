@@ -212,8 +212,6 @@
 - (void)parsedXMLElement:(NSXMLElement *)element objColorModel:(WDColorModel *)objColorModel
 {
     for (NSXMLElement *subElement in element.children) {
-        NSXMLElement *objNode = nil;
-        NSInteger index = subElement.index;
         if ([subElement.name isEqualToString:@"color"]) {
             WDColorModel *obj = [WDColorModel colorModelWithArray:subElement.attributes];
             if ([obj isEqual:self.targetColorModel]) {
@@ -221,18 +219,43 @@
                 objColorModel.alpha = obj.alpha;
                 objColorModel.colorSpace = obj.colorSpace;
                 objColorModel.customColorSpace = obj.customColorSpace;
-                objNode = [self creatXMLNodel:objColorModel];
+                [self updateXMLNodelWithNode:subElement color:objColorModel];
             }
-        }
-        if (objNode) {
-            // 替换
-            [element replaceChildAtIndex:index withNode:objNode];
         }
         [self parsedXMLElement:subElement objColorModel:objColorModel];
     }
 }
 
-// 设置新的 NSXMLElement
+// 更新 NSXMLElement
+- (void)updateXMLNodelWithNode:(NSXMLElement *)subElement color:(WDColorModel *)obj
+{
+    NSArray *array = subElement.attributes;
+    for (NSXMLNode *node in array) {
+        if ([node.name isEqualToString:@"key"]) {
+            [node setStringValue:obj.key];
+        }
+        else if ([node.name isEqualToString:@"colorSpace"]) {
+            [node setStringValue:obj.colorSpace];
+        }
+        else if ([node.name isEqualToString:@"alpha"]) {
+            [node setStringValue:obj.alpha];
+        }
+        else if ([node.name isEqualToString:@"customColorSpace"]) {
+            [node setStringValue:obj.customColorSpace];
+        }
+        else if ([node.name isEqualToString:@"red"]) {
+            [node setStringValue:obj.red];
+        }
+        else if ([node.name isEqualToString:@"green"]) {
+            [node setStringValue:obj.green];
+        }
+        else if ([node.name isEqualToString:@"blue"]) {
+            [node setStringValue:obj.blue];
+        }
+    }
+}
+
+// 创建新的 NSXMLElement
 - (NSXMLElement *)creatXMLNodel:(WDColorModel *)obj
 {
     NSXMLElement *subNode = [NSXMLElement elementWithName:@"color"];

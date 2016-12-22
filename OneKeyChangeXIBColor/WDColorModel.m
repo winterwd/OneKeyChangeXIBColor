@@ -12,7 +12,7 @@
 
 + (WDColorModel *)colorModelWithArray:(NSArray<NSXMLNode *> *)array
 {
-     WDColorModel *model = [[WDColorModel alloc] init];
+    WDColorModel *model = [[WDColorModel alloc] init];
     for (NSXMLNode *node in array) {
         if ([node.name isEqualToString:@"key"]) {
             model.key = node.stringValue;
@@ -129,7 +129,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"key:%@\n red:%@\n green:%@\n blue:%@ alpha:%@\n colorSpace:%@\n customColorSpace:%@\n",self.key, self.red, self.green, self.blue, self.alpha, self.colorSpace, self.customColorSpace];
+    return [NSString stringWithFormat:@"key:%@\n red:%@\n green:%@\n blue:%@\n alpha:%@\n colorSpace:%@\n customColorSpace:%@\n",self.key, self.red, self.green, self.blue, self.alpha, self.colorSpace, self.customColorSpace];
 }
 
 @end
