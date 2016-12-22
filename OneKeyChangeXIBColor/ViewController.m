@@ -39,7 +39,7 @@
     self.storyboardFilePaths = [NSMutableArray array];
     
     self.beforeColor = [[ColorValue alloc] init];
-    self.beforeColor = [[ColorValue alloc] init];
+    self.afterColor = [[ColorValue alloc] init];
 }
 
 #pragma mark - delegate
@@ -216,7 +216,7 @@
         NSInteger index = subElement.index;
         if ([subElement.name isEqualToString:@"color"]) {
             WDColorModel *obj = [WDColorModel colorModelWithArray:subElement.attributes];
-            if ([obj isEqual:objColorModel]) {
+            if ([obj isEqual:self.targetColorModel]) {
                 objNode = [self creatXMLNodel:obj];
             }
         }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2659" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11542"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11762"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -129,7 +129,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" constant="80" id="AIJ-q4-lto"/>
                                         </constraints>
-                                        <buttonCell key="cell" type="push" title="文件路径:" bezelStyle="rounded" alignment="right" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="b9d-P6-yTW">
+                                        <buttonCell key="cell" type="push" title="文件路径:" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="b9d-P6-yTW">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -338,7 +338,7 @@
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" tag="104" translatesAutoresizingMaskIntoConstraints="NO" id="kch-NR-W4R">
+                                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" tag="105" translatesAutoresizingMaskIntoConstraints="NO" id="kch-NR-W4R">
                                                 <rect key="frame" x="46" y="13" width="89" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="20" id="lT7-uA-ZDd"/>
@@ -384,10 +384,10 @@
                                     <constraint firstAttribute="trailing" secondItem="F2w-JA-YPe" secondAttribute="trailing" constant="5" id="Ka1-Xw-c0F"/>
                                     <constraint firstItem="Er9-pN-lCO" firstAttribute="top" secondItem="cMQ-GP-LNg" secondAttribute="top" id="PZg-vw-JEP"/>
                                     <constraint firstAttribute="trailing" secondItem="Er9-pN-lCO" secondAttribute="trailing" id="YhM-s0-R2b"/>
-                                    <constraint firstAttribute="height" constant="160" id="ZqY-MT-8xK"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="160" id="ZqY-MT-8xK"/>
                                     <constraint firstItem="2oG-Th-I1n" firstAttribute="top" secondItem="psZ-qG-XAH" secondAttribute="bottom" constant="10" id="deJ-pL-s35"/>
                                     <constraint firstItem="psZ-qG-XAH" firstAttribute="top" secondItem="cMQ-GP-LNg" secondAttribute="top" id="sEA-g9-bDc"/>
-                                    <constraint firstAttribute="width" constant="300" id="zvw-Ys-ql6"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="zvw-Ys-ql6"/>
                                 </constraints>
                             </customView>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="O73-Qv-pGH">
@@ -428,10 +428,13 @@
                             <constraint firstItem="O73-Qv-pGH" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="HYk-Lw-MCf"/>
                             <constraint firstItem="cMQ-GP-LNg" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" id="Jhm-f8-w1x"/>
                             <constraint firstAttribute="bottom" secondItem="jno-Ge-lfP" secondAttribute="bottom" id="LYg-eW-iqB"/>
+                            <constraint firstItem="fQw-QB-hq8" firstAttribute="top" secondItem="O73-Qv-pGH" secondAttribute="bottom" constant="18" id="QBZ-pA-REE"/>
                             <constraint firstItem="fQw-QB-hq8" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="VQs-uS-rHv"/>
                             <constraint firstAttribute="trailing" secondItem="jno-Ge-lfP" secondAttribute="trailing" id="cEw-Yy-IMN"/>
                             <constraint firstItem="jno-Ge-lfP" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="dZR-gr-3pu"/>
                             <constraint firstItem="O73-Qv-pGH" firstAttribute="top" secondItem="cMQ-GP-LNg" secondAttribute="bottom" constant="20" id="ebN-Kr-7rT"/>
+                            <constraint firstItem="cMQ-GP-LNg" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="90" id="lqN-DH-kve"/>
+                            <constraint firstAttribute="trailing" secondItem="cMQ-GP-LNg" secondAttribute="trailing" constant="90" id="w3b-iS-11m"/>
                             <constraint firstItem="cMQ-GP-LNg" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="y2Q-TQ-ZkL"/>
                             <constraint firstItem="OlR-Y4-icN" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="zRu-zH-RlY"/>
                         </constraints>
