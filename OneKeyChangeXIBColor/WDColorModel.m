@@ -126,7 +126,7 @@
     }
     
     // green
-    if (self.greenValue == object.blueValue) {
+    if (self.greenValue == object.greenValue) {
         greenEqual = YES;
     }
     else if (self.greenValue == objMinusGreenValue) {
