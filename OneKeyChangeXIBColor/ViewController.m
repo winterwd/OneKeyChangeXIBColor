@@ -10,15 +10,24 @@
 #import "WDColorModel.h"
 
 @interface ViewController ()<NSTextDelegate>
-@property (weak) IBOutlet NSTextField *modifySuccess;
-@property (weak) IBOutlet NSTextField *modifyFailed;
+@property (weak) IBOutlet NSTextField *beforeRTF;
+@property (weak) IBOutlet NSTextField *beforeGTF;
+@property (weak) IBOutlet NSTextField *beforeBTF;
+@property (weak) IBOutlet NSTextField *afterRTF;
+@property (weak) IBOutlet NSTextField *afterGTF;
+@property (weak) IBOutlet NSTextField *afterBTF;
+
+@property (nonatomic, assign) NSInteger successNum;
+@property (nonatomic, assign) NSInteger failedNum;
+
+@property (weak) IBOutlet NSTextField *modifyResult;
 @property (weak) IBOutlet NSTextField *sourcePathTextField;
 
 @property (weak) IBOutlet NSProgressIndicator *indicator;
 @property (weak) IBOutlet NSView *indicatorView;
 
 @property (nonatomic, strong) NSMutableArray *xibFilePaths;
-@property (nonatomic, strong) NSMutableArray *storyboardFilePaths;
+@property (nonatomic, strong) NSMutableArray *sbFilePaths;
 
 @property (nonatomic, strong) ColorValue *beforeColor;
 @property (nonatomic, strong) ColorValue *afterColor;
@@ -30,13 +39,12 @@
 
 @implementation ViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     // Do any additional setup after loading the view.
     self.xibFilePaths = [NSMutableArray array];
-    self.storyboardFilePaths = [NSMutableArray array];
+    self.sbFilePaths = [NSMutableArray array];
     
     self.beforeColor = [[ColorValue alloc] init];
     self.afterColor = [[ColorValue alloc] init];
@@ -44,30 +52,38 @@
 
 #pragma mark - delegate
 
-- (void)controlTextDidChange:(NSNotification *)notification
-{
+- (void)controlTextDidChange:(NSNotification *)notification {
+    self.modifyResult.hidden = YES;
     NSTextField *sender = notification.object;
     NSTextView *textView = notification.userInfo[@"NSFieldEditor"];
     NSString *string = textView.string;
+    if (string.length == 0) {
+        return;
+    }
+    NSUInteger value = [string floatValue];
+    if (value >255) {
+        [self showResult:@"色值为非负且不大于255的整数！"];
+        return;
+    }
     
     switch (sender.tag) {
         case 100:
-            self.beforeColor.red = [string floatValue];
+            self.beforeColor.redValue = value;
             break;
         case 101:
-            self.beforeColor.green = [string floatValue];
+            self.beforeColor.greenValue = value;
             break;
         case 102:
-            self.beforeColor.blue = [string floatValue];
+            self.beforeColor.blueValue = value;
             break;
         case 103:
-            self.afterColor.red = [string floatValue];
+            self.afterColor.redValue = value;
             break;
         case 104:
-            self.afterColor.green = [string floatValue];
+            self.afterColor.greenValue = value;
             break;
         case 105:
-            self.afterColor.blue = [string floatValue];
+            self.afterColor.blueValue = value;
             break;
         case 0:
             // filepath
@@ -78,8 +94,7 @@
 
 #pragma mark - action
 
-- (IBAction)choseFilePath:(NSButton *)sender
-{
+- (IBAction)choseFilePath:(NSButton *)sender {
     NSOpenPanel *openPanel = [NSOpenPanel openPanel];
     [openPanel setCanChooseFiles:YES];
     [openPanel setCanChooseDirectories:YES];
@@ -96,53 +111,77 @@
     }];
 }
 
-- (IBAction)startChage:(NSButton *)sender
-{
-    if (self.filePath.length > 0) {
-        [self startAnimation];
-        
-        [self startChangeXibColorWith:self.beforeColor after:self.afterColor sourcePath:self.filePath];
+- (IBAction)startChage:(NSButton *)sender {
+    if (self.beforeColor.hasValue && self.afterColor.hasValue) {
+        if (self.filePath.length > 0) {
+            [self startAnimation];
+            [self startChangeXibColorWith:self.beforeColor after:self.afterColor sourcePath:self.filePath];
+        }
+        else {
+            [self showResult:@"请选择文件路径！"];
+        }
     }
     else {
-        
+        [self showResult:@"请输入修改前后的颜色值！"];
     }
 }
 
-- (void)startAnimation
-{
+- (void)startAnimation {
+    self.modifyResult.hidden = YES;
     self.indicatorView.hidden = NO;
     [self.indicator startAnimation:nil];
 }
 
-- (void)stopAnimation
-{
+- (void)stopAnimation {
     [self.indicator stopAnimation:nil];
     self.indicatorView.hidden = YES;
 }
 
+- (void)showResult:(NSString *)result {
+    self.modifyResult.hidden = NO;
+    [self.modifyResult setStringValue:result];
+}
+
+- (void)finshedClear {
+    [self.beforeRTF setStringValue:@""];
+    [self.beforeGTF setStringValue:@""];
+    [self.beforeBTF setStringValue:@""];
+    [self.afterRTF setStringValue:@""];
+    [self.afterGTF setStringValue:@""];
+    [self.afterBTF setStringValue:@""];
+    
+    [self.beforeColor clearValue];
+    [self.afterColor clearValue];
+}
+
 #pragma mark - changeColor
+
 /**
  开始执行 修改 xib或stroyboard 控件的颜色
-
+ 
  @param beforColor 修改前的颜色值
  @param afterColor 修改后的颜色值
  @param sourcePath 所需要修改的文件路径
  */
-- (void)startChangeXibColorWith:(ColorValue *)beforColor after:(ColorValue *)afterColor sourcePath:(NSString *)sourcePath
-{
+- (void)startChangeXibColorWith:(ColorValue *)beforColor after:(ColorValue *)afterColor sourcePath:(NSString *)sourcePath {
+    // clear
+    self.successNum = 0;
+    self.failedNum = 0;
+    [self.xibFilePaths removeAllObjects];
+    [self.sbFilePaths removeAllObjects];
+    
     self.targetColorModel = [[WDColorModel alloc] init];
     self.targetColorModel.color = beforColor;
-
+    
     WDColorModel *objColorModel = [[WDColorModel alloc] init];
     objColorModel.color = afterColor;
-
+    
     [self findXibOrStoryboardFile:sourcePath];
     [self modifyColorModel:objColorModel];
 }
 
 // 搜索xib/storyboard文件
-- (void)findXibOrStoryboardFile:(NSString*)path
-{
+- (void)findXibOrStoryboardFile:(NSString*)path {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     BOOL isDir = NO;
     if ([fileManager fileExistsAtPath:path isDirectory:&isDir]&&isDir) {
@@ -154,49 +193,50 @@
         if ([path containsString:@".xib"]) {
             [self.xibFilePaths addObject:path];
         }
-        else if ([path containsString:@".storyboard"]) {
-            [self.storyboardFilePaths addObject:path];
+        if ([path containsString:@".storyboard"]) {
+            [self.sbFilePaths addObject:path];
         }
     }
 }
 
 // 开始修改颜色 objColorModel : 需要被替换的
-- (void)modifyColorModel:(WDColorModel *)objColorModel
-{
-    BOOL xibResult = [self modifyColorModel:objColorModel filePaths:self.xibFilePaths];
-    BOOL storyboardResult = [self modifyColorModel:objColorModel filePaths:self.storyboardFilePaths];
-
-    [self stopAnimation];
-    if (xibResult && storyboardResult) {
-        self.modifySuccess.hidden = NO;
-        self.modifyFailed.hidden = YES;
-    }
-    else {
-        self.modifySuccess.hidden = YES;
-        self.modifyFailed.hidden = NO;
+- (void)modifyColorModel:(WDColorModel *)objColorModel {
+    if (self.xibFilePaths.count == 0 && self.sbFilePaths.count == 0) {
+        NSLog(@"error = 该路径下没有xib/storyboard文件");
+        [self showResult:@"当前目录下没有发现xib或者storyboard文件！"];
+        return;
     }
     
-    if (self.xibFilePaths.count == 0 && self.storyboardFilePaths.count == 0) {
-        NSLog(@"error = 该路径下没有xib/storyboard文件");
-    }
+    [self modifyColorModel:objColorModel filePaths:self.xibFilePaths];
+    [self modifyColorModel:objColorModel filePaths:self.sbFilePaths];
+    
+    [self stopAnimation];
+    
+    NSInteger total = self.xibFilePaths.count + self.sbFilePaths.count;
+    NSString *result = [NSString stringWithFormat:@"总共 %ld 个，成功修改 %ld 个文件，失败 %ld 个", total, (long)self.successNum, (long)self.failedNum];
+    [self showResult:result];
+    [self finshedClear];
 }
 
 // 修改 并返回结果
-- (BOOL)modifyColorModel:(WDColorModel *)objColorModel filePaths:(NSMutableArray *)filePaths
-{
-    BOOL result = NO;
+- (void)modifyColorModel:(WDColorModel *)objColorModel filePaths:(NSMutableArray *)filePaths {
     for (NSString *filePath in filePaths) {
         NSData *xmlData = [NSData dataWithContentsOfFile:filePath];
         NSXMLDocument *document = [self parsedDataFromData:xmlData colorModel:objColorModel];
         // 存储新的
-        result = [self saveXMLFile:filePath xmlDoucment:document];
+        BOOL result = [self saveXMLFile:filePath xmlDoucment:document];
+        if (result) {
+            self.successNum++;
+        }
+        else {
+            self.failedNum++;
+        }
     }
-    return result;
 }
 
 // 获取 XMLDocument
-- (NSXMLDocument *)parsedDataFromData:(NSData *)data colorModel:(WDColorModel *)objColorModel
-{
+- (NSXMLDocument *)parsedDataFromData:(NSData *)data colorModel:(WDColorModel *)objColorModel {
+    
     NSError *error = nil;
     NSXMLDocument *document = [[NSXMLDocument alloc] initWithData:data options:NSXMLNodePreserveWhitespace error:&error];
     NSXMLElement *rootElement = document.rootElement;
@@ -209,16 +249,12 @@
 }
 
 // 修改元素
-- (void)parsedXMLElement:(NSXMLElement *)element objColorModel:(WDColorModel *)objColorModel
-{
+- (void)parsedXMLElement:(NSXMLElement *)element objColorModel:(WDColorModel *)objColorModel {
+    
     for (NSXMLElement *subElement in element.children) {
         if ([subElement.name isEqualToString:@"color"]) {
             WDColorModel *obj = [WDColorModel colorModelWithArray:subElement.attributes];
             if ([obj isEqual:self.targetColorModel]) {
-//                objColorModel.key = obj.key;
-//                objColorModel.alpha = obj.alpha;
-//                objColorModel.colorSpace = obj.colorSpace;
-//                objColorModel.customColorSpace = obj.customColorSpace;
                 [self updateXMLNodelWithNode:subElement color:objColorModel];
             }
         }
@@ -227,8 +263,8 @@
 }
 
 // 更新 NSXMLElement
-- (void)updateXMLNodelWithNode:(NSXMLElement *)subElement color:(WDColorModel *)obj
-{
+- (void)updateXMLNodelWithNode:(NSXMLElement *)subElement color:(WDColorModel *)obj {
+    
     NSArray *array = subElement.attributes;
     for (NSXMLNode *node in array) {
         
@@ -241,25 +277,25 @@
         else if ([node.name isEqualToString:@"blue"]) {
             [node setStringValue:obj.blue];
         }
-//        else if ([node.name isEqualToString:@"key"]) {
-//            [node setStringValue:obj.key];
-//        }
-//        else if ([node.name isEqualToString:@"colorSpace"]) {
-//            [node setStringValue:obj.colorSpace];
-//        }
-//        else if ([node.name isEqualToString:@"alpha"]) {
-//            [node setStringValue:obj.alpha];
-//        }
-//        else if ([node.name isEqualToString:@"customColorSpace"]) {
-//            // Xcode8 以后
-//            [node setStringValue:obj.customColorSpace];
-//        }
+        //        else if ([node.name isEqualToString:@"key"]) {
+        //            [node setStringValue:obj.key];
+        //        }
+        //        else if ([node.name isEqualToString:@"colorSpace"]) {
+        //            [node setStringValue:obj.colorSpace];
+        //        }
+        //        else if ([node.name isEqualToString:@"alpha"]) {
+        //            [node setStringValue:obj.alpha];
+        //        }
+        //        else if ([node.name isEqualToString:@"customColorSpace"]) {
+        //            // Xcode8 以后
+        //            [node setStringValue:obj.customColorSpace];
+        //        }
     }
 }
 
 // 创建新的 NSXMLElement
-- (NSXMLElement *)creatXMLNodel:(WDColorModel *)obj
-{
+- (NSXMLElement *)creatXMLNodel:(WDColorModel *)obj {
+    
     NSXMLElement *subNode = [NSXMLElement elementWithName:@"color"];
     [subNode addAttribute:[NSXMLNode attributeWithName:@"key" stringValue:obj.key]];
     [subNode addAttribute:[NSXMLNode attributeWithName:@"red" stringValue:obj.red]];
@@ -275,18 +311,18 @@
     return subNode;
 }
 
-- (BOOL)saveXMLFile:(NSString *)destPath xmlDoucment:(NSXMLDocument *)XMLDoucment
-{
+- (BOOL)saveXMLFile:(NSString *)destPath xmlDoucment:(NSXMLDocument *)XMLDoucment {
+    
     if (XMLDoucment == nil) {
         return NO;
     }
-
-    if ( ! [[NSFileManager defaultManager] fileExistsAtPath:destPath]) {
-        if ( ! [[NSFileManager defaultManager] createFileAtPath:destPath contents:nil attributes:nil]){
+    
+    if ( ![[NSFileManager defaultManager] fileExistsAtPath:destPath]) {
+        if ( ![[NSFileManager defaultManager] createFileAtPath:destPath contents:nil attributes:nil]){
             return NO;
         }
     }
-
+    
     NSData *XMLData = [XMLDoucment XMLDataWithOptions:NSXMLNodePrettyPrint];
     if (![XMLData writeToFile:destPath atomically:YES]) {
         NSLog(@"Could not write document out...");

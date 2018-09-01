@@ -9,23 +9,26 @@
 #import <Foundation/Foundation.h>
 
 @interface ColorValue : NSObject
-@property (nonatomic, assign) CGFloat red;
-@property (nonatomic, assign) CGFloat green;
-@property (nonatomic, assign) CGFloat blue;
+@property (nonatomic, assign) CGFloat redValue;
+@property (nonatomic, assign) CGFloat greenValue;
+@property (nonatomic, assign) CGFloat blueValue;
 
-@property (nonatomic, copy) NSString *redString;
-@property (nonatomic, copy) NSString *greenString;
-@property (nonatomic, copy) NSString *blueString;
+@property (nonatomic, copy) NSString *red;
+@property (nonatomic, copy) NSString *green;
+@property (nonatomic, copy) NSString *blue;
+
+@property (nonatomic, readonly) BOOL hasValue;
+- (void)clearValue;
 @end
 
 @interface WDColorModel : NSObject
 
 @property (nonatomic, strong) ColorValue *color;
 
-// 四位数
-@property (nonatomic, assign) NSInteger redValue;
-@property (nonatomic, assign) NSInteger greenValue;
-@property (nonatomic, assign) NSInteger blueValue;
+// RGB小数
+@property (nonatomic, assign) CGFloat redValue;
+@property (nonatomic, assign) CGFloat greenValue;
+@property (nonatomic, assign) CGFloat blueValue;
 
 
 @property (nonatomic, copy) NSString *red;
@@ -38,5 +41,4 @@
 @property (nonatomic, copy) NSString *customColorSpace;
 
 + (WDColorModel *)colorModelWithArray:(NSArray<NSXMLNode *> *)array;
-
 @end
