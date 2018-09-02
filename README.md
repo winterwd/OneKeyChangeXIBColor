@@ -1,5 +1,17 @@
-### [详细介绍请移步！](http://www.jianshu.com/p/55570716108f)各位同学有问题可以留言，一起进步！
+***
 
+### 2018.9.2
+
+这个改色的小工具，本来是我自己在工作中，碰到的需要解决的问题，就做了一个这样的小工具，当时仅限满足自己的需求，但是最近有简友留言，提出有bug，还提出了一些改进的意见(多谢@灯塔的焰火)，本是打算，赶紧修复一些这些问题，怎奈懒癌病犯，以至拖到今日，实在惭愧！。。。
+
+此次优化如下：
+
+	-> 1，优化了匹配色值算法；
+	-> 2，优化颜色数据模型ColorValue；
+	-> 3，优化结果提示，失败情况下用红色，修改完成则用绿色；
+	-> 4，修改完成后，恢复初始状态，以节省资源，提高性能；
+
+如果此工具对你有帮助，那就顺手给个star吧 -> [star](https://github.com/winterwd/OneKeyChangeXIBColor)
 
 ***
 
@@ -11,8 +23,12 @@
 ##### 使用上的一些改进：
     1. 我做了一个很好用的界面，你可以在界面上进行颜色值得操作；
     2. 可以点击文件路径 进行选择所需要修改的文件的路径。
-   ![simple1.png](http://upload-images.jianshu.io/upload_images/1064509-dc91e5be25dfbe2f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-   ![simple2.png](http://upload-images.jianshu.io/upload_images/1064509-1574fbc2f73b7a6a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+    
+![simple1.png](http://upload-images.jianshu.io/upload_images/1064509-1574fbc2f73b7a6a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+![simple2.png](https://upload-images.jianshu.io/upload_images/1064509-276e4ffac67faabf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+![simple3.png](https://upload-images.jianshu.io/upload_images/1064509-620fc44e86481643.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ### 代码的优化：
 
@@ -55,16 +71,28 @@
   - 颜色数据模型ColorValue;
   
 	```obj-C
-	// RGB色值转为四位小数 这里‘*10000’再‘0.%ld’是截取小数后四位
-	- (void)setRed:(CGFloat)red
-	{
-	        _red = red;
-	      
-	        CGFloat temp = red / 255.0;
-	        NSInteger tempValue = temp * 10000;
-	        self.redString = [NSString stringWithFormat:@"0.%ld",tempValue];
+	// 直接存储 转化后RGB色值，_redValue为CGFloat类型，作为匹配参考值，这里截取小数后8位，作为要修改的色值
+	- (void)setRedValue:(CGFloat)red {
+	    CGFloat tempValue = red / 255.0;
+    	_redValue = tempValue;
+    	self.red = [NSString stringWithFormat:@"%.8f",tempValue];
 	}
 	```
+	
+  - 色值匹配算法;
+ 
+	```obj-C
+	// 相比较以前的容错算法来说，这样的写法更简洁，在此，暂时将相似精度值设置为0.0001
+	- (BOOL)isEqual:(WDColorModel *)object {
+    
+	    BOOL redEqual = fabs(self.redValue - object.redValue) < 0.0001;
+	    BOOL blueEqual = fabs(self.blueValue - object.blueValue) < 0.0001;
+	    BOOL greenEqual = fabs(self.greenValue - object.greenValue) < 0.0001;
+	    
+	    return redEqual && blueEqual && greenEqual;
+	}
+	```
+	
   - 搜索.xib和.storyboard文件，这个没什么说的，就是文件操作，检索文件后缀;
   
   - 获取color元素(NSXMLElement)，并操作修改;
@@ -113,5 +141,5 @@
     }
  ```
 
-具体细节见[代码](https://git.oschina.net/winter7/OneKeyChangeXIBColor.git)，如果觉得不错，那就顺手start🤗
+具体细节见[代码](https://github.com/winterwd/OneKeyChangeXIBColor)，如果觉得不错，那就顺手start🤗
 > End
