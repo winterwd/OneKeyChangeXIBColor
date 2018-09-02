@@ -27,10 +27,6 @@
 		C839A7771C9FDA1500B6B7F3 /* libxml2.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.2.tbd; path = usr/lib/libxml2.2.tbd; sourceTree = SDKROOT; };
 		C839A7881C9FDC5800B6B7F3 /* WDColorModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WDColorModel.h; sourceTree = "<group>"; };
 		C839A7891C9FDC5800B6B7F3 /* WDColorModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WDColorModel.m; sourceTree = "<group>"; };
-		C8B1AB40213ABF4500E1ED11 /* test.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = test.storyboard; sourceTree = "<group>"; };
-		C8B1AB41213ABF4500E1ED11 /* testView1.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = testView1.xib; sourceTree = "<group>"; };
-		C8B1AB42213ABF4500E1ED11 /* testView2.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = testView2.xib; sourceTree = "<group>"; };
-		C8B1AB43213ABF4500E1ED11 /* testView3.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = testView3.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,7 +66,6 @@
 				C839A76A1C9FD9EC00B6B7F3 /* ViewController.m */,
 				C839A7881C9FDC5800B6B7F3 /* WDColorModel.h */,
 				C839A7891C9FDC5800B6B7F3 /* WDColorModel.m */,
-				C8B1AB3F213ABF4400E1ED11 /* testXIB */,
 				C839A7661C9FD9EC00B6B7F3 /* Supporting Files */,
 			);
 			path = OneKeyChangeXIBColor;
@@ -86,17 +81,6 @@
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
-		};
-		C8B1AB3F213ABF4400E1ED11 /* testXIB */ = {
-			isa = PBXGroup;
-			children = (
-				C8B1AB40213ABF4500E1ED11 /* test.storyboard */,
-				C8B1AB41213ABF4500E1ED11 /* testView1.xib */,
-				C8B1AB42213ABF4500E1ED11 /* testView2.xib */,
-				C8B1AB43213ABF4500E1ED11 /* testView3.xib */,
-			);
-			path = testXIB;
-			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
