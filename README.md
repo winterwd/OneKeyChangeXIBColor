@@ -24,11 +24,11 @@
     1. 我做了一个很好用的界面，你可以在界面上进行颜色值得操作；
     2. 可以点击文件路径 进行选择所需要修改的文件的路径。
     
-![simple1.png](http://upload-images.jianshu.io/upload_images/1064509-1574fbc2f73b7a6a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![simple1.png](http://upload-images.jianshu.io/upload_images/1064509-1574fbc2f73b7a6a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/500)
 
-![simple2.png](https://upload-images.jianshu.io/upload_images/1064509-276e4ffac67faabf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![simple2.png](https://upload-images.jianshu.io/upload_images/1064509-276e4ffac67faabf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/500)
 
-![simple3.png](https://upload-images.jianshu.io/upload_images/1064509-620fc44e86481643.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![simple3.png](https://upload-images.jianshu.io/upload_images/1064509-620fc44e86481643.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/500)
 
 ### 代码的优化：
 
