@@ -17,8 +17,7 @@
 @property (weak) IBOutlet NSTextField *afterGTF;
 @property (weak) IBOutlet NSTextField *afterBTF;
 
-@property (nonatomic, assign) NSInteger successNum;
-@property (nonatomic, assign) NSInteger failedNum;
+@property (nonatomic, assign) NSInteger modifiedNum;
 
 @property (weak) IBOutlet NSTextField *modifyResult;
 @property (weak) IBOutlet NSTextField *sourcePathTextField;
@@ -138,7 +137,13 @@
 }
 
 - (void)showResult:(NSString *)result {
+    NSColor *color = [NSColor colorWithSRGBRed:0.80 green:0.23 blue:0.08 alpha:1.00];//redColor
+    [self showResult:result color:color];
+}
+
+- (void)showResult:(NSString *)result color:(NSColor *)color {
     self.modifyResult.hidden = NO;
+    self.modifyResult.textColor = color;
     [self.modifyResult setStringValue:result];
 }
 
@@ -165,8 +170,7 @@
  */
 - (void)startChangeXibColorWith:(ColorValue *)beforColor after:(ColorValue *)afterColor sourcePath:(NSString *)sourcePath {
     // clear
-    self.successNum = 0;
-    self.failedNum = 0;
+    self.modifiedNum = 0;
     [self.xibFilePaths removeAllObjects];
     [self.sbFilePaths removeAllObjects];
     
@@ -213,8 +217,17 @@
     [self stopAnimation];
     
     NSInteger total = self.xibFilePaths.count + self.sbFilePaths.count;
-    NSString *result = [NSString stringWithFormat:@"总共 %ld 个，成功修改 %ld 个文件，失败 %ld 个", total, (long)self.successNum, (long)self.failedNum];
-    [self showResult:result];
+    ;
+    
+    if (self.modifiedNum > 0) {
+        NSColor *color = [NSColor colorWithSRGBRed:0.15 green:0.65 blue:0.11 alpha:1.00];//green
+        NSString *result = [NSString stringWithFormat:@"总共 %ld 个文件，找到并修改了 %ld 处色值", total, (long)self.modifiedNum];
+        [self showResult:result color: color];
+    }
+    else {
+        NSString *result = [NSString stringWithFormat:@"总共 %ld 个文件，未找到所要修改的色值！", total];
+        [self showResult:result ];
+    }
     [self finshedClear];
 }
 
@@ -225,11 +238,8 @@
         NSXMLDocument *document = [self parsedDataFromData:xmlData colorModel:objColorModel];
         // 存储新的
         BOOL result = [self saveXMLFile:filePath xmlDoucment:document];
-        if (result) {
-            self.successNum++;
-        }
-        else {
-            self.failedNum++;
+        if (!result) {
+            NSLog(@"修改之后，文件保存失败！。。。");
         }
     }
 }
@@ -250,7 +260,6 @@
 
 // 修改元素
 - (void)parsedXMLElement:(NSXMLElement *)element objColorModel:(WDColorModel *)objColorModel {
-    
     for (NSXMLElement *subElement in element.children) {
         if ([subElement.name isEqualToString:@"color"]) {
             WDColorModel *obj = [WDColorModel colorModelWithArray:subElement.attributes];
@@ -264,10 +273,10 @@
 
 // 更新 NSXMLElement
 - (void)updateXMLNodelWithNode:(NSXMLElement *)subElement color:(WDColorModel *)obj {
+    self.modifiedNum++;
     
     NSArray *array = subElement.attributes;
     for (NSXMLNode *node in array) {
-        
         if ([node.name isEqualToString:@"red"]) {
             [node setStringValue:obj.red];
         }
